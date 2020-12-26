@@ -9,6 +9,7 @@ func main() {
 	fmt.Println("mySubString: ", mySubString("abca"))
 	fmt.Println("subString: ", subString("abca"))
 	fmt.Println("longestSubstringWithoutRepeatingChar: ", longestSubstringWithoutRepeatingChar("pwwkew"))
+	fmt.Println(longestPalindromicSubString("aacabdkacaa"))
 }
 
 // my logic
@@ -66,4 +67,27 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func longestPalindromicSubString(s string) string {
+	var max string
+
+	maxPalindrome := func(s, max string, i, j int) string {
+		var sub string
+		for i >= 0 && j < len(s) && s[i] == s[j] {
+			sub = s[i : j+1]
+			i--
+			j++
+		}
+		if len(max) < len(sub) {
+			return sub
+		}
+		return max
+	}
+
+	for i := 0; i < len(s); i++ {
+		max = maxPalindrome(s, max, i, i)
+		max = maxPalindrome(s, max, i, i+1)
+	}
+	return max
 }
