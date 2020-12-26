@@ -6,8 +6,9 @@ import (
 
 func main() {
 
-	fmt.Println(mySubString("abca"))
-	fmt.Println(subString("abca"))
+	fmt.Println("mySubString: ", mySubString("abca"))
+	fmt.Println("subString: ", subString("abca"))
+	fmt.Println("longestSubstringWithoutRepeatingChar: ", longestSubstringWithoutRepeatingChar("pwwkew"))
 }
 
 // my logic
@@ -43,4 +44,26 @@ func subString(s string) []string {
 	}
 
 	return subStr
+}
+
+func longestSubstringWithoutRepeatingChar(s string) int {
+	m := make(map[rune]int)
+	dupCharIndex, longestLength := 0, 0
+
+	for i, val := range s {
+		if mIndex, ok := m[val]; ok {
+			dupCharIndex = max(dupCharIndex, mIndex+1)
+		}
+
+		m[val] = i
+		longestLength = max(longestLength, i-dupCharIndex+1)
+	}
+	return longestLength
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
